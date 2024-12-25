@@ -1,0 +1,1 @@
+/usr/bin/c++  -Wall -Werror -std=c++14 CMakeFiles/studiousdollop.dir/src/main.cpp.o -o studiousdollop 
