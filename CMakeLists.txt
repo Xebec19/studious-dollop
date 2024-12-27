@@ -8,3 +8,7 @@ set (source_dir "${PROJECT_SOURCE_DIR}/src/")
 file (GLOB source_files "${source_dir}/*.cpp")
 
 add_executable (studiousdollop ${source_files})
+
+# Link SQLite3
+find_package(SQLite3 REQUIRED)
+target_link_libraries(studiousdollop SQLite::SQLite3)
