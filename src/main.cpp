@@ -2,6 +2,7 @@
 #include <sqlite3.h>
 #include <filesystem>
 #include <string>
+#include <fstream>
 
 namespace fs = std::filesystem;
 
@@ -44,15 +45,32 @@ void listFiles(const fs::path &path, sqlite3 *db)
     }
 }
 
+std::string readConfig(const std::string &configFilePath)
+{
+    std::ifstream configFile(configFilePath);
+    std::string path;
+    if (configFile.is_open())
+    {
+        std::getline(configFile, path);
+        configFile.close();
+    }
+    else
+    {
+        std::cerr << "Unable to open config file" << std::endl;
+    }
+    return path;
+}
+
 int main(int argc, char *argv[])
 {
-    if (argc < 2)
+    std::string configFilePath = "config.txt";
+    std::string path = readConfig(configFilePath);
+
+    if (path.empty())
     {
-        std::cerr << "Usage: " << argv[0] << " <path>" << std::endl;
+        std::cerr << "Path not found in config file" << std::endl;
         return -1;
     }
-
-    std::string path = argv[1];
 
     sqlite3 *db;
     char *errorMessage;
